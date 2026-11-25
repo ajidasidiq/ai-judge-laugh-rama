@@ -25,6 +25,10 @@ OUTPUT_PATH = Path("/output/entry.txt")
 
 
 def main() -> int:
+    # The gate admits only 1-200 characters: refuse to write a line that
+    # would be scored invalid rather than silently shipping it.
+    if not 1 <= len(JOKE) <= 200 or not JOKE.strip():
+        raise ValueError(f"joke must be 1-200 characters, got {len(JOKE)}")
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(JOKE, encoding="utf-8")
     return 0
